@@ -313,6 +313,8 @@ namespace KinectHand
             DrawFrame2(e.Graphics);
 
             this.HandDepth.Text = "Z: " + Hands[0].position_meters_absolute.Z.ToString();
+            this.textBox1.Text = "Left Hand: " + Hands[0].fingers[1].position_pixels_from_hand.X.ToString() + ", " + Hands[0].fingers[1].position_pixels_from_hand.Y.ToString() + ", " + Hands[0].fingers[1].position_pixels_from_hand.Z.ToString();
+
 
             //}
         }
@@ -333,24 +335,24 @@ namespace KinectHand
                 g.FillEllipse(Brushes.Gold, rightHandPoint.X - 6, rightHandPoint.Y - 6, 12, 12);
 
                 // Draw Fingers Left
-                for (int i = 0; i < Hands[0].fingers.Length; i++)
-                {
-                    if (Hands[0].fingers[i].tracked == true)
+                int j = 1;
+                    if (Hands[0].fingers[j].tracked == true)
                     {
-                        System.Drawing.Point fingerPoint = new System.Drawing.Point(Hands[0].fingers[i].X, Hands[0].fingers[i].Y);
+                        System.Drawing.Point fingerPoint = new System.Drawing.Point(Hands[0].fingers[j].X, Hands[0].fingers[j].Y);
+                        Console.WriteLine(Hands[0].fingers[2].position_pixels_absolute.ToString());
                         g.FillEllipse(Brushes.White, fingerPoint.X - 4, fingerPoint.Y - 4, 8, 8);
                         g.DrawLine(Pens.Aqua, leftHandPoint, fingerPoint);
 
                         // If the DrawAngle box is checked, draw the angle of the fingers from the hand
                         if (this.checkBox1.Checked)
                         {
-                            g.DrawString((Math.Truncate(Hands[0].fingers[i].angle_from_hand_degrees.X * 100) / 100).ToString(),
+                            g.DrawString((Math.Truncate(Hands[0].fingers[j].angle_from_hand_degrees.X * 100) / 100).ToString(),
                                 System.Drawing.SystemFonts.SmallCaptionFont, Brushes.White,
                                 (int)(Hands[0].X + 1.3 * (fingerPoint.X - Hands[0].X - 10)),
                                 (int)(Hands[0].Y + 1.5 * (fingerPoint.Y - Hands[0].Y) - 5));
                         }
                     }
-                }
+                
 
                 // Draw Fingers Right
                 for (int i = 0; i < Hands[1].fingers.Length; i++)
@@ -358,6 +360,7 @@ namespace KinectHand
                     if (Hands[1].fingers[i].tracked == true)
                     {
                         System.Drawing.Point fingerPoint = new System.Drawing.Point(Hands[1].fingers[i].X, Hands[1].fingers[i].Y);
+                        Console.WriteLine(Hands[1].fingers[2].position_pixels_absolute.ToString());
                         g.FillEllipse(Brushes.White, fingerPoint.X - 4, fingerPoint.Y - 4, 8, 8);
                         g.DrawLine(Pens.Aqua, rightHandPoint, fingerPoint);
 
@@ -411,5 +414,15 @@ namespace KinectHand
             FPScount = 0;
         }
         #endregion
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
