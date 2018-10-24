@@ -3,8 +3,10 @@ using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +21,11 @@ namespace KinectHand
 {
     public partial class KinectDebugForm : Form
     {
+        /// <summary>
+        /// Intermediate storage for the color data received from the camera
+        /// </summary>
+        private byte[] colorPixels;
+
         #region DEEBUG_DATA
 
         int FPScount;
@@ -114,6 +121,12 @@ namespace KinectHand
 
                 // Initialize bitmaps to correct size for input streams
                 this.depthPixels = new short[this.sensor.DepthStream.FramePixelDataLength];
+
+                // Turn on the color stream to receive color frames
+                this.sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+
+                // Allocate space to put the pixels we'll receive
+                this.colorPixels = new byte[this.sensor.ColorStream.FramePixelDataLength];
 
                 //add threading
                 Thread streamThread = new Thread(new ThreadStart(streamThreadInit));
@@ -287,6 +300,41 @@ namespace KinectHand
             this.Invalidate();
         }
 
+        private void SensorColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
+        {
+            using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
+            {
+                if (colorFrame != null)
+                {
+                    // Copy the pixel data from the image to a temporary array
+                    colorFrame.CopyPixelDataTo(this.colorPixels);
+                    
+                    // Update the image
+                    if(this.pictureBox1.Image != null)
+                    {
+                        this.pictureBox1.Image.Dispose();
+                    }
+
+                    this.pictureBox1.Image = this.imageToBitmap(colorFrame);
+                }
+            }
+        }
+
+        private Bitmap imageToBitmap(ColorImageFrame Image)
+        {
+            byte[] pixeldata = new byte[Image.PixelDataLength];
+            Image.CopyPixelDataTo(pixeldata);
+            Bitmap bmap = new Bitmap(Image.Width, Image.Height, PixelFormat.Format32bppRgb);
+            BitmapData bmapdata = bmap.LockBits(
+                new Rectangle(0, 0, Image.Width, Image.Height),
+                ImageLockMode.WriteOnly,
+                bmap.PixelFormat);
+            IntPtr ptr = bmapdata.Scan0;
+            Marshal.Copy(pixeldata, 0, ptr, Image.PixelDataLength);
+            bmap.UnlockBits(bmapdata);
+            return bmap;
+        }
+
         #region DRAW_FUNCTIONS
         private void OnPaint(object sender, PaintEventArgs e)
         {
@@ -421,6 +469,16 @@ namespace KinectHand
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
         }

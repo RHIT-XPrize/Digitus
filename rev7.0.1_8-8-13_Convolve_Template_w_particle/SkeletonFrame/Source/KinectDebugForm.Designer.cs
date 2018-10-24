@@ -38,6 +38,9 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ColorFeedLabel = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // MessageBox
@@ -63,7 +66,7 @@
             this.VersionInfo.BackColor = System.Drawing.Color.Black;
             this.VersionInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.VersionInfo.ForeColor = System.Drawing.Color.White;
-            this.VersionInfo.Location = new System.Drawing.Point(859, 214);
+            this.VersionInfo.Location = new System.Drawing.Point(22, 500);
             this.VersionInfo.Margin = new System.Windows.Forms.Padding(4);
             this.VersionInfo.Multiline = true;
             this.VersionInfo.Name = "VersionInfo";
@@ -76,7 +79,7 @@
             this.FPSInfo.BackColor = System.Drawing.Color.Black;
             this.FPSInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.FPSInfo.ForeColor = System.Drawing.Color.White;
-            this.FPSInfo.Location = new System.Drawing.Point(859, 270);
+            this.FPSInfo.Location = new System.Drawing.Point(222, 500);
             this.FPSInfo.Margin = new System.Windows.Forms.Padding(4);
             this.FPSInfo.Name = "FPSInfo";
             this.FPSInfo.Size = new System.Drawing.Size(192, 15);
@@ -88,7 +91,7 @@
             this.HandDepth.BackColor = System.Drawing.Color.Black;
             this.HandDepth.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.HandDepth.ForeColor = System.Drawing.Color.White;
-            this.HandDepth.Location = new System.Drawing.Point(859, 293);
+            this.HandDepth.Location = new System.Drawing.Point(222, 523);
             this.HandDepth.Margin = new System.Windows.Forms.Padding(4);
             this.HandDepth.Name = "HandDepth";
             this.HandDepth.Size = new System.Drawing.Size(192, 15);
@@ -99,25 +102,27 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(859, 318);
+            this.checkBox1.Location = new System.Drawing.Point(422, 494);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(104, 21);
             this.checkBox1.TabIndex = 9;
             this.checkBox1.Text = "Show Angle";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(859, 346);
+            this.checkBox2.Location = new System.Drawing.Point(422, 522);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(125, 21);
             this.checkBox2.TabIndex = 10;
             this.checkBox2.Text = "Left Hand Only";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // textBox1
             // 
@@ -132,12 +137,34 @@
             this.textBox1.Text = "Hand Depth:";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(895, 35);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(640, 480);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
+            // 
+            // ColorFeedLabel
+            // 
+            this.ColorFeedLabel.BackColor = System.Drawing.Color.Black;
+            this.ColorFeedLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ColorFeedLabel.ForeColor = System.Drawing.Color.White;
+            this.ColorFeedLabel.Location = new System.Drawing.Point(895, 13);
+            this.ColorFeedLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.ColorFeedLabel.Name = "ColorFeedLabel";
+            this.ColorFeedLabel.Size = new System.Drawing.Size(192, 15);
+            this.ColorFeedLabel.TabIndex = 13;
+            this.ColorFeedLabel.Text = "Color Feed";
+            // 
             // KinectDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1067, 591);
+            this.ClientSize = new System.Drawing.Size(1547, 584);
+            this.Controls.Add(this.ColorFeedLabel);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -154,6 +181,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KinectDebug";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,6 +197,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TextBox textBox1;
+        protected System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox ColorFeedLabel;
     }
 
 
